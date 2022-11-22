@@ -235,6 +235,8 @@ typedef enum {
   RA_FAILED = 5
 } RA_state_t;
 
+typedef message_direction_t slot_config_req_type_t;
+
 typedef struct {
   /// PRACH format retrieved from prach_ConfigIndex
   uint16_t prach_format;
@@ -437,7 +439,7 @@ typedef struct {
   int first_ul_tx[NR_MAX_HARQ_PROCESSES];
   ////	FAPI-like interface message
   fapi_nr_ul_config_request_t *ul_config_request;
-  fapi_nr_dl_config_request_t dl_config_request;
+  fapi_nr_dl_config_request_t *dl_config_request;
 
   ///     Interface module instances
   nr_ue_if_module_t       *if_module;
