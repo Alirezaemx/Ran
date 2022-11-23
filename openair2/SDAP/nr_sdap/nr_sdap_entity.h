@@ -107,7 +107,8 @@ typedef struct nr_sdap_entity_s {
                     int pdusession_id,
                     int rnti,
                     char *buf,
-                    int size);
+                    int size,
+                    int sn_latseq);
 
   /* List of entities */
   struct nr_sdap_entity_s *next_entity;

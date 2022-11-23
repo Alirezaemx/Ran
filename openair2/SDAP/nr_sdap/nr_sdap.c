@@ -20,6 +20,7 @@
  */
 
 #include "nr_sdap.h"
+#include "common/utils/LATSEQ/latseq.h"
 
 uint8_t nas_qfi;
 uint8_t nas_pduid;
@@ -68,7 +69,8 @@ void sdap_data_ind(rb_id_t pdcp_entity,
                    int pdusession_id,
                    int rnti,
                    char *buf,
-                   int size) {
+                   int size,
+                   int sn_latseq) {
   nr_sdap_entity_t *sdap_entity;
   sdap_entity = nr_sdap_get_entity(rnti, pdusession_id);
 
@@ -77,6 +79,7 @@ void sdap_data_ind(rb_id_t pdcp_entity,
     return;
   }
 
+  LATSEQ_P("U sdap.pdu--sdap.sdu", "len%d::sn%d", size, sn_latseq);
   sdap_entity->rx_entity(sdap_entity,
                          pdcp_entity,
                          is_gnb,
@@ -85,7 +88,8 @@ void sdap_data_ind(rb_id_t pdcp_entity,
                          pdusession_id,
                          rnti,
                          buf,
-                         size);
+                         size,
+                         sn_latseq);
 }
 
 void set_qfi_pduid(uint8_t qfi, uint8_t pduid){
