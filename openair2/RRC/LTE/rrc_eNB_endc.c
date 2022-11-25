@@ -24,6 +24,7 @@
 #include "rrc_eNB_UE_context.h"
 #include "common/ran_context.h"
 #include "LTE_DL-DCCH-Message.h"
+#include "uper_encoder.h"
 
 #include <stdio.h>
 #include <stdlib.h>

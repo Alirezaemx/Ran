@@ -40,6 +40,7 @@
 #include "NR_PDSCH-ServingCellConfig.h"
 #include "NR_RLC-BearerConfig.h"
 #include "BOOLEAN.h"
+#include "uper_encoder.h"
 #include "assertions.h"
 #include "common/utils/nr/nr_common.h"
 #include "SIMULATION/TOOLS/sim.h"
