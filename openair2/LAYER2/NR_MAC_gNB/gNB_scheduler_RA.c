@@ -792,9 +792,20 @@ void nr_generate_Msg3_retransmission(module_id_t module_idP, int CC_id, frame_t 
     }
 
     uint8_t aggregation_level;
+    uint8_t nr_of_candidates;
+    for (int i=0; i<5; i++) {
+      // for now taking the lowest value among the available aggregation levels
+      find_aggregation_candidates(&aggregation_level,
+                                  &nr_of_candidates,
+                                  ss,
+                                  1<<i);
+      if(nr_of_candidates>0)
+        break;
+    }
     int CCEIndex = get_cce_index(nr_mac,
                                  CC_id, slot, 0,
-                                 &aggregation_level,
+                                 aggregation_level,
+                                 nr_of_candidates,
                                  ss,
                                  coreset,
                                  &ra->sched_pdcch,
@@ -1181,9 +1192,20 @@ void nr_generate_Msg2(module_id_t module_idP, int CC_id, frame_t frameP, sub_fra
     }
 
     uint8_t aggregation_level;
+    uint8_t nr_of_candidates;
+    for (int i=0; i<5; i++) {
+      // for now taking the lowest value among the available aggregation levels
+      find_aggregation_candidates(&aggregation_level,
+                                  &nr_of_candidates,
+                                  ss,
+                                  1<<i);
+      if(nr_of_candidates>0)
+        break;
+    }
     int CCEIndex = get_cce_index(nr_mac,
                                  CC_id, slotP, 0,
-                                 &aggregation_level,
+                                 aggregation_level,
+                                 nr_of_candidates,
                                  ss,
                                  coreset,
                                  &ra->sched_pdcch,
@@ -1437,9 +1459,20 @@ void nr_generate_Msg4(module_id_t module_idP, int CC_id, frame_t frameP, sub_fra
 
     // get CCEindex, needed also for PUCCH and then later for PDCCH
     uint8_t aggregation_level;
+    uint8_t nr_of_candidates;
+    for (int i=0; i<5; i++) {
+      // for now taking the lowest value among the available aggregation levels
+      find_aggregation_candidates(&aggregation_level,
+                                  &nr_of_candidates,
+                                  ss,
+                                  1<<i);
+      if(nr_of_candidates>0)
+        break;
+    }
     int CCEIndex = get_cce_index(nr_mac,
                                  CC_id, slotP, 0,
-                                 &aggregation_level,
+                                 aggregation_level,
+                                 nr_of_candidates,
                                  ss,
                                  coreset,
                                  &ra->sched_pdcch,

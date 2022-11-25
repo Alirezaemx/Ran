@@ -1450,7 +1450,8 @@ static bool allocate_ul_retransmission(gNB_MAC_INST *nrmac,
   /* Find a free CCE */
   int CCEIndex = get_cce_index(nrmac,
                                CC_id, slot, UE->rnti,
-                               &sched_ctrl->aggregation_level,
+                               sched_ctrl->aggregation_level,
+                               sched_ctrl->nr_of_candidates,
                                sched_ctrl->search_space,
                                sched_ctrl->coreset,
                                &sched_ctrl->sched_pdcch,
@@ -1597,7 +1598,8 @@ void pf_ul(module_id_t module_id,
       /* Find a free CCE */
       int CCEIndex = get_cce_index(nrmac,
                                    CC_id, slot, UE->rnti,
-                                   &sched_ctrl->aggregation_level,
+                                   sched_ctrl->aggregation_level,
+                                   sched_ctrl->nr_of_candidates,
                                    sched_ctrl->search_space,
                                    sched_ctrl->coreset,
                                    &sched_ctrl->sched_pdcch,
@@ -1677,7 +1679,8 @@ void pf_ul(module_id_t module_id,
     NR_UE_sched_ctrl_t *sched_ctrl = &iterator->UE->UE_sched_ctrl;
     int CCEIndex = get_cce_index(nrmac,
                                  CC_id, slot, iterator->UE->rnti,
-                                 &sched_ctrl->aggregation_level,
+                                 sched_ctrl->aggregation_level,
+                                 sched_ctrl->nr_of_candidates,
                                  sched_ctrl->search_space,
                                  sched_ctrl->coreset,
                                  &sched_ctrl->sched_pdcch,
@@ -1860,12 +1863,24 @@ bool nr_fr1_ulsch_preprocessor(module_id_t module_id, frame_t frame, sub_frame_t
   for (int i = 0; i < bwpSize; i++)
     rballoc_mask[i] = (i >= st && i <= e)*SL_to_bitmap(startSymbolIndex, nrOfSymbols);
 
+  int max_sched_ues = 0;
+  int cumul_dci_res = 0;
+  int bw = scc->downlinkConfigCommon->frequencyInfoDL->scs_SpecificCarrierList.list.array[0]->carrierBandwidth;
+  UE_iterator(nr_mac->UE_info.list, curr_UE) {
+    NR_UE_sched_ctrl_t *sched_ctrl = &curr_UE->UE_sched_ctrl;
+    cumul_dci_res += sched_ctrl->aggregation_level * NR_NB_REG_PER_CCE;
+    if(cumul_dci_res < bw)
+      max_sched_ues++;
+    else
+      break;
+  }
+
   /* proportional fair scheduling algorithm */
   pf_ul(module_id,
         frame,
         slot,
         nr_mac->UE_info.list,
-        2,
+        max_sched_ues,
         len,
         rballoc_mask);
   return true;

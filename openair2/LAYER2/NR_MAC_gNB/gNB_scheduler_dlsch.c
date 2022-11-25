@@ -479,7 +479,8 @@ bool allocate_dl_retransmission(module_id_t module_id,
   /* Find a free CCE */
   int CCEIndex = get_cce_index(nr_mac,
                                CC_id, slot, UE->rnti,
-                               &sched_ctrl->aggregation_level,
+                               sched_ctrl->aggregation_level,
+                               sched_ctrl->nr_of_candidates,
                                sched_ctrl->search_space,
                                sched_ctrl->coreset,
                                &sched_ctrl->sched_pdcch,
@@ -656,7 +657,8 @@ void pf_dl(module_id_t module_id,
 
     int CCEIndex = get_cce_index(mac,
                                  CC_id, slot, iterator->UE->rnti,
-                                 &sched_ctrl->aggregation_level,
+                                 sched_ctrl->aggregation_level,
+                                 sched_ctrl->nr_of_candidates,
                                  sched_ctrl->search_space,
                                  sched_ctrl->coreset,
                                  &sched_ctrl->sched_pdcch,
@@ -789,6 +791,18 @@ void nr_fr1_dlsch_preprocessor(module_id_t module_id, frame_t frame, sub_frame_t
     }
   }
 
+  int max_sched_ues = 0;
+  int cumul_dci_res = 0;
+  int bw = scc->downlinkConfigCommon->frequencyInfoDL->scs_SpecificCarrierList.list.array[0]->carrierBandwidth;
+  UE_iterator(UE_info->list, curr_UE) {
+    NR_UE_sched_ctrl_t *sched_ctrl = &curr_UE->UE_sched_ctrl;
+    cumul_dci_res += sched_ctrl->aggregation_level * NR_NB_REG_PER_CCE;
+    if(cumul_dci_res < bw)
+      max_sched_ues++;
+    else
+      break;
+  }
+
   /* Retrieve amount of data to send for this UE */
   nr_store_dlsch_buffer(module_id, frame, slot);
   /* proportional fair scheduling algorithm */
@@ -796,7 +810,7 @@ void nr_fr1_dlsch_preprocessor(module_id_t module_id, frame_t frame, sub_frame_t
         frame,
         slot,
         UE_info->list,
-        MAX_MOBILES_PER_GNB,
+        max_sched_ues,
         n_rb_sched,
         rballoc_mask);
 }

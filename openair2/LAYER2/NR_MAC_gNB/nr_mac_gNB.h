@@ -562,6 +562,7 @@ typedef struct {
   /// corresponding to the sched_pusch/sched_pdsch structures below
   int cce_index;
   uint8_t aggregation_level;
+  uint8_t nr_of_candidates;
 
   /// Array of PUCCH scheduling information
   /// Its size depends on TDD configuration and max feedback time
