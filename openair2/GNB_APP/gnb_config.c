@@ -830,7 +830,7 @@ void RCconfig_nr_macrlc() {
     char *ulprbbl = *GNBParamList.paramarray[0][GNB_ULPRBBLACKLIST_IDX].strptr;
     char *save = NULL;
     char *pt = strtok_r(ulprbbl, ",", &save);
-    memset(prbbl, 0, 275 * sizeof(uint16_t));
+    memset(prbbl,0,sizeof(prbbl));
     while (pt) {
       const int prb = atoi(pt);
       AssertFatal(prb < 275, "RB %d out of bounds (max 275)\n", prb);
