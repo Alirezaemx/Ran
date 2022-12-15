@@ -44,6 +44,8 @@
 
 #include "intertask_interface.h"
 
+#include "common/utils/LATSEQ/latseq.h"
+
 //#define DEBUG_RXDATA
 //#define SRS_IND_DEBUG
 
@@ -150,6 +152,7 @@ void phy_procedures_gNB_TX(processingData_L1tx_t *msgTx,
       }
     }
   }
+  LATSEQ_P("D phy.prsgenerated--phy.ssbgenerated", "len%u::frame%u.slot%u", 1, frame, slot);
 
   VCD_SIGNAL_DUMPER_DUMP_FUNCTION_BY_NAME(VCD_SIGNAL_DUMPER_FUNCTIONS_PHY_PROCEDURES_gNB_COMMON_TX,1);
   for (int i=0; i<fp->Lmax; i++) {
@@ -158,6 +161,7 @@ void phy_procedures_gNB_TX(processingData_L1tx_t *msgTx,
       msgTx->ssb[i].active = false;
     }
   }
+  LATSEQ_P("D phy.ssbgenerated--phy.dcigenerated", "len%u::frame%u.slot%u", 1, frame, slot);
   
   VCD_SIGNAL_DUMPER_DUMP_FUNCTION_BY_NAME(VCD_SIGNAL_DUMPER_FUNCTIONS_PHY_PROCEDURES_gNB_COMMON_TX,0);
 
@@ -175,6 +179,7 @@ void phy_procedures_gNB_TX(processingData_L1tx_t *msgTx,
 
     VCD_SIGNAL_DUMPER_DUMP_FUNCTION_BY_NAME(VCD_SIGNAL_DUMPER_FUNCTIONS_PHY_gNB_PDCCH_TX,0);
   }
+  LATSEQ_P("D phy.dcigenerated--phy.dlschencoded", "len%u::frame%u.slot%u", 1, frame, slot);
  
   if (msgTx->num_pdsch_slot > 0) {
     VCD_SIGNAL_DUMPER_DUMP_FUNCTION_BY_NAME(VCD_SIGNAL_DUMPER_FUNCTIONS_GENERATE_DLSCH,1);
@@ -192,6 +197,7 @@ void phy_procedures_gNB_TX(processingData_L1tx_t *msgTx,
       csirs->active = 0;
     }
   }
+  LATSEQ_P("D phy.csirsgenerated--phy.rotated", "len%u::frame%u.slot%u", 1, frame, slot);
 
 //  if ((frame&127) == 0) dump_pdsch_stats(gNB);
 
@@ -203,6 +209,7 @@ void phy_procedures_gNB_TX(processingData_L1tx_t *msgTx,
       T_INT(frame), T_INT(slot),
       T_INT(aa), T_BUFFER(&gNB->common_vars.txdataF[aa][txdataF_offset], fp->samples_per_slot_wCP*sizeof(int32_t)));
   }
+  LATSEQ_P("D phy.rotated--phy.reorderthread", "len%u::frame%u.slot%u", 1, frame, slot);
 
   VCD_SIGNAL_DUMPER_DUMP_FUNCTION_BY_NAME(VCD_SIGNAL_DUMPER_FUNCTIONS_PHY_PROCEDURES_gNB_TX+offset,0);
 }
