@@ -104,6 +104,7 @@
 
 #include "BIT_STRING.h"
 #include "assertions.h"
+#include "nfapi/oai_integration/vendor_ext.h"
 
 //#define XER_PRINT
 
@@ -3994,9 +3995,11 @@ void *rrc_gnb_task(void *args_p) {
         break;
 
       case TIMER_HAS_EXPIRED:
-        /* only this one handled for now */
-        DevAssert(TIMER_HAS_EXPIRED(msg_p).timer_id == stats_timer_id);
-        write_rrc_stats(RC.nrrrc[0]);
+        if(NFAPI_MODE != NFAPI_MODE_PNF){
+          /* only this one handled for now */
+          DevAssert(TIMER_HAS_EXPIRED(msg_p).timer_id == stats_timer_id);
+          write_rrc_stats(RC.nrrrc[0]);
+        }
         break;
 
       case RRC_SUBFRAME_PROCESS:

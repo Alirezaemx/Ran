@@ -3060,7 +3060,7 @@ int pnf_p7_message_pump(pnf_p7_t* pnf_p7)
 	struct sockaddr_in addr;
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
-	addr.sin_port = pnf_p7->_public.local_p7_port;
+	addr.sin_port = htons(pnf_p7->_public.local_p7_port);
 
 	if(pnf_p7->_public.local_p7_addr == 0)
 	{
@@ -3232,7 +3232,7 @@ int pnf_nr_p7_message_pump(pnf_p7_t* pnf_p7)
 	struct sockaddr_in addr;
 	memset(&addr, 0, sizeof(addr));
 	addr.sin_family = AF_INET;
-	addr.sin_port = pnf_p7->_public.local_p7_port;
+	addr.sin_port = htons(pnf_p7->_public.local_p7_port);
 
 	if(pnf_p7->_public.local_p7_addr == 0)
 	{
