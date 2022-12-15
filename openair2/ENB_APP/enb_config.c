@@ -112,7 +112,7 @@ void RCconfig_L1(void) {
         // This is used by init_eNB_afterRU()
         RC.nb_CC = (int *)malloc((1+RC.nb_inst)*sizeof(int));
         RC.nb_CC[0]=1;
-        RC.nb_inst =1; // DJP - feptx_prec uses num_eNB but phy_init_RU uses nb_inst
+        RC.nb_inst =1; // feptx_prec uses num_eNB but phy_init_RU uses nb_inst
         LOG_I(PHY,"%s() NFAPI PNF mode - RC.nb_inst=1 this is because phy_init_RU() uses that to index and not RC.num_eNB - why the 2 similar variables?\n", __FUNCTION__);
         LOG_I(PHY,"%s() NFAPI PNF mode - RC.nb_CC[0]=%d for init_eNB_afterRU()\n", __FUNCTION__, RC.nb_CC[0]);
         LOG_I(PHY,"%s() NFAPI PNF mode - RC.nb_macrlc_inst:%d because used by mac_top_init_eNB()\n", __FUNCTION__, RC.nb_macrlc_inst);
@@ -142,10 +142,10 @@ void RCconfig_L1(void) {
     l1_north_init_eNB();
   } else {
     LOG_I(PHY,"No " CONFIG_STRING_L1_LIST " configuration found");
-    // DJP need to create some structures for VNF
+    // need to create some structures for VNF
     j = 0;
-    RC.nb_L1_CC = malloc((1+RC.nb_L1_inst)*sizeof(int)); // DJP - 1 lot then???
-    RC.nb_L1_CC[j]=1; // DJP - hmmm
+    RC.nb_L1_CC = malloc((1+RC.nb_L1_inst)*sizeof(int)); // 1 lot then???
+    RC.nb_L1_CC[j]=1; //  hmmm
 
     if (RC.eNB[j] == NULL) {
       RC.eNB[j]                       = (PHY_VARS_eNB **)malloc((1+MAX_NUM_CCs)*sizeof(PHY_VARS_eNB **));

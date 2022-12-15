@@ -797,7 +797,7 @@ void RCconfig_NR_L1(void) {
   }else{
     LOG_I(PHY,"No " CONFIG_STRING_L1_LIST " configuration found");    
 
-    // DJP need to create some structures for VNF
+    // need to create some structures for VNF
 
     j = 0;
 
