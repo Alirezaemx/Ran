@@ -47,7 +47,7 @@ const int get_ul_tda(gNB_MAC_INST *nrmac, const NR_ServingCellConfigCommon_t *sc
 
   if (tdd && tdd->nrofUplinkSymbols > 1) { // if there is uplink symbols in mixed slot
     const int nr_slots_period = tdd->nrofDownlinkSlots + tdd->nrofUplinkSlots + 1;
-    if ((slot%nr_slots_period) == tdd->nrofDownlinkSlots)
+    if ((slot % nr_slots_period) == tdd->nrofDownlinkSlots)
       return 2;
   }
 
