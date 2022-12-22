@@ -144,8 +144,8 @@ void RCconfig_L1(void) {
     LOG_I(PHY,"No " CONFIG_STRING_L1_LIST " configuration found");
     // need to create some structures for VNF
     j = 0;
-    RC.nb_L1_CC = malloc((1+RC.nb_L1_inst)*sizeof(int)); // 1 lot then???
-    RC.nb_L1_CC[j]=1; //  hmmm
+    RC.nb_L1_CC = malloc((1+RC.nb_L1_inst)*sizeof(int));
+    RC.nb_L1_CC[j]=1;
 
     if (RC.eNB[j] == NULL) {
       RC.eNB[j]                       = (PHY_VARS_eNB **)malloc((1+MAX_NUM_CCs)*sizeof(PHY_VARS_eNB **));

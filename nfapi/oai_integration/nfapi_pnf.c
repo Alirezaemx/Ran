@@ -548,13 +548,12 @@ int pnf_stop_request(nfapi_pnf_config_t *config, nfapi_pnf_stop_request_t *req) 
 
 int param_request(nfapi_pnf_config_t *config, nfapi_pnf_phy_config_t *phy, nfapi_param_request_t *req) {
   printf("[PNF] Received NFAPI_PARAM_REQUEST phy_id:%d\n", req->header.phy_id);
-  //pnf_info* pnf = (pnf_info*)(config->user_data);
   nfapi_param_response_t nfapi_resp;
   pnf_info *pnf = (pnf_info *)(config->user_data);
   memset(&nfapi_resp, 0, sizeof(nfapi_resp));
   nfapi_resp.header.message_id = NFAPI_PARAM_RESPONSE;
   nfapi_resp.header.phy_id = req->header.phy_id;
-  nfapi_resp.error_code = 0; // what value???
+  nfapi_resp.error_code = 0;
   struct sockaddr_in pnf_p7_sockaddr;
   pnf_p7_sockaddr.sin_addr.s_addr = inet_addr(pnf->phys[0].local_addr);
   nfapi_resp.nfapi_config.p7_pnf_address_ipv4.tl.tag = NFAPI_NFAPI_P7_PNF_ADDRESS_IPV4_TAG;
@@ -572,13 +571,12 @@ int param_request(nfapi_pnf_config_t *config, nfapi_pnf_phy_config_t *phy, nfapi
 
 int nr_param_request(nfapi_pnf_config_t *config, nfapi_pnf_phy_config_t *phy, nfapi_nr_param_request_scf_t *req) {
   printf("[PNF] Received NFAPI_PARAM_REQUEST phy_id:%d\n", req->header.phy_id);
-  //pnf_info* pnf = (pnf_info*)(config->user_data);
   nfapi_nr_param_response_scf_t nfapi_resp;
   pnf_info *pnf = (pnf_info *)(config->user_data);
   memset(&nfapi_resp, 0, sizeof(nfapi_resp));
   nfapi_resp.header.message_id = NFAPI_NR_PHY_MSG_TYPE_PARAM_RESPONSE;
   nfapi_resp.header.phy_id = req->header.phy_id;
-  nfapi_resp.error_code = 0; // what value???
+  nfapi_resp.error_code = 0;
   struct sockaddr_in pnf_p7_sockaddr;
   
   // ASSIGN TAGS
@@ -982,7 +980,7 @@ int config_request(nfapi_pnf_config_t *config, nfapi_pnf_phy_config_t *phy, nfap
   memset(&nfapi_resp, 0, sizeof(nfapi_resp));
   nfapi_resp.header.message_id = NFAPI_CONFIG_RESPONSE;
   nfapi_resp.header.phy_id = phy_info->id;
-  nfapi_resp.error_code = 0; // some value resp->error_code;
+  nfapi_resp.error_code = 0;
   nfapi_pnf_config_resp(config, &nfapi_resp);
   printf("[PNF] Sent NFAPI_CONFIG_RESPONSE phy_id:%d\n", phy_info->id);
 
@@ -1076,7 +1074,7 @@ int nr_config_request(nfapi_pnf_config_t *config, nfapi_pnf_phy_config_t *phy, n
   memset(&nfapi_resp, 0, sizeof(nfapi_resp));
   nfapi_resp.header.message_id = NFAPI_NR_PHY_MSG_TYPE_CONFIG_RESPONSE;
   nfapi_resp.header.phy_id = phy_info->id;
-  nfapi_resp.error_code = 0; // some value resp->error_code;
+  nfapi_resp.error_code = 0;
   nfapi_nr_pnf_config_resp(config, &nfapi_resp);
   printf("[PNF] Sent NFAPI_PNF_CONFIG_RESPONSE phy_id:%d\n", phy_info->id);
 
@@ -1631,7 +1629,6 @@ int start_request(nfapi_pnf_config_t *config, nfapi_pnf_phy_config_t *phy, nfapi
   p7_config->remote_p7_port = phy_info->remote_port;
   p7_config->remote_p7_addr = phy_info->remote_addr;
   p7_config->local_p7_port = phy_info->udp.rx_port;
-  //p7_config->local_p7_addr = (char*)phy_info->local_addr.c_str();
   p7_config->local_p7_addr = phy_info->local_addr;
   printf("[PNF] P7 remote:%s:%d local:%s:%d\n", p7_config->remote_p7_addr, p7_config->remote_p7_port, p7_config->local_p7_addr, p7_config->local_p7_port);
   p7_config->user_data = phy_info;
@@ -1751,7 +1748,6 @@ int nr_start_request(nfapi_pnf_config_t *config, nfapi_pnf_phy_config_t *phy,  n
   p7_config->remote_p7_addr = phy_info->remote_addr;
 
   p7_config->local_p7_port = phy_info->udp.rx_port;
-  //p7_config->local_p7_addr = (char*)phy_info->local_addr.c_str();
   p7_config->local_p7_addr = phy_info->local_addr;
   printf("[PNF] P7 remote:%s:%d local:%s:%d\n", p7_config->remote_p7_addr, p7_config->remote_p7_port, p7_config->local_p7_addr, p7_config->local_p7_port);
   p7_config->user_data = phy_info;
@@ -1827,7 +1823,6 @@ int nr_start_request(nfapi_pnf_config_t *config, nfapi_pnf_phy_config_t *phy,  n
   NFAPI_TRACE(NFAPI_TRACE_INFO, "[PNF] Creating P7 thread %s\n", __FUNCTION__);
   pthread_t p7_thread;
   pthread_create(&p7_thread, NULL, &pnf_nr_p7_thread_start, p7_config);
-  //((pnf_phy_user_data_t*)(phy_info->fapi->user_data))->p7_config = p7_config;
   NFAPI_TRACE(NFAPI_TRACE_INFO, "[PNF] Calling l1_north_init_eNB() %s\n", __FUNCTION__);
   l1_north_init_gNB();
   NFAPI_TRACE(NFAPI_TRACE_INFO, "[PNF] HACK - Set p7_config global ready for subframe ind%s\n", __FUNCTION__);
@@ -1982,8 +1977,6 @@ int broadcast_detect_request(nfapi_pnf_config_t *config, nfapi_pnf_phy_config_t 
     case NFAPI_RAT_TYPE_UTRAN: {
       ind.utran_broadcast_detect_indication.tl.tag = NFAPI_UTRAN_BROADCAST_DETECT_INDICATION_TAG;
       ind.utran_broadcast_detect_indication.mib_length = 4;
-      //ind.utran_broadcast_detect_indication.mib...
-      // ind.utran_broadcast_detect_indication.sfn_offset; nonsense line
     }
     break;
   }
