@@ -58,6 +58,7 @@
 #include <dlfcn.h>
 
 #include "T.h"
+#include "openair2/LAYER2/MAC/mac_extern.h"
 
 #define ENABLE_MAC_PAYLOAD_DEBUG
 //#define DEBUG_eNB_SCHEDULER 1
@@ -65,6 +66,7 @@
 #include "common/ran_context.h"
 extern RAN_CONTEXT_t RC;
 
+mac_rlc_am_muilist_t rlc_am_mui;
 
 //------------------------------------------------------------------------------
 void

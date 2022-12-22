@@ -38,7 +38,7 @@
 #include "SCHED_UE/sched_UE.h"
 #include "SIMULATION/TOOLS/sim.h" // for taus
 #include "PHY/sse_intrin.h"
-#include "PHY/LTE_TRANSPORT/transport_extern.h"
+#include "PHY/LTE_TRANSPORT/transport_vars.h"
 #include "PHY/LTE_REFSIG/lte_refsig.h"
 #include "SCHED/sched_common.h"
 

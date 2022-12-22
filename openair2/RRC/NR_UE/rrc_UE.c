@@ -1344,8 +1344,14 @@ static void rrc_ue_generate_RRCSetupComplete(
   LOG_I(NR_RRC,"[UE %d][RAPROC] Frame %d : Logical Channel UL-DCCH (SRB1), Generating RRCSetupComplete (bytes%d, gNB %d)\n",
    ctxt_pP->module_id,ctxt_pP->frame, size, gNB_index);
   LOG_D(NR_RRC,
-       "[FRAME %05d][RRC_UE][MOD %02d][][--- PDCP_DATA_REQ/%d Bytes (RRCSetupComplete to gNB %d MUI %d) --->][PDCP][MOD %02d][RB %02d]\n",
-       ctxt_pP->frame, ctxt_pP->module_id+NB_RN_INST, size, gNB_index, nr_rrc_mui, ctxt_pP->module_id+NB_eNB_INST, DCCH);
+        "[FRAME %05d][RRC_UE][MOD %02d][][--- PDCP_DATA_REQ/%d Bytes (RRCSetupComplete to gNB %d MUI %d) --->][PDCP][MOD %02d][RB %02d]\n",
+        ctxt_pP->frame,
+        ctxt_pP->module_id,
+        size,
+        gNB_index,
+        nr_rrc_mui,
+        ctxt_pP->module_id + NB_eNB_INST,
+        DCCH);
 
   //for (int i=0;i<size;i++) printf("%02x ",buffer[i]);
   //printf("\n");

@@ -212,11 +212,6 @@ void mac_switch_node_function(module_id_t module_idP);
 
 int mac_init_global_param(void);
 
-void mac_top_cleanup(void);
-
-void mac_UE_out_of_sync_ind(module_id_t module_idP, frame_t frameP,
-                            uint16_t eNB_index);
-
 void clear_nfapi_information(eNB_MAC_INST *eNB, int CC_idP,
                              frame_t frameP, sub_frame_t subframeP);
 

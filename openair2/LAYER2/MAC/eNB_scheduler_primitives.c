@@ -58,10 +58,10 @@ extern uint16_t frame_cnt;
 
 #include "common/ran_context.h"
 #include "SCHED/sched_common.h"
-
+#include "openair2/LAYER2/MAC/mac_extern.h"
 extern RAN_CONTEXT_t RC;
-
-
+eNB_ULSCH_INFO eNB_ulsch_info[NUMBER_OF_eNB_MAX][MAX_NUM_CCs][MAX_MOBILES_PER_ENB];
+eNB_DLSCH_INFO eNB_dlsch_info[NUMBER_OF_eNB_MAX][MAX_NUM_CCs][MAX_MOBILES_PER_ENB]; // eNBxUE = 8x8
 //------------------------------------------------------------------------------
 int
 choose(int n,

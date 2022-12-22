@@ -43,7 +43,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "COMMON/platform_constants.h"
+#include "common/platform_constants.h"
 #include "LTE_BCCH-BCH-Message.h"
 #include "LTE_RadioResourceConfigCommon.h"
 #include "LTE_RadioResourceConfigCommonSIB.h"
