@@ -882,7 +882,7 @@ elif re.match('^TesteNB$', mode, re.IGNORECASE) or re.match('^TestUE$', mode, re
 					RAN.WaitBuildeNBisFinished(HTML)
 				elif action == 'Custom_Command':
 					logging.info(f"Executing custom command")
-					RAN.CustomCommand(RAN, EPC, HTML)
+					RAN.CustomCommand(HTML)
 				elif action == 'Initialize_eNB':
 					check_eNB = False
 					check_OAI_UE = False
