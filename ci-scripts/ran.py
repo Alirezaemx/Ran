@@ -96,6 +96,8 @@ class RANManagement():
 		#checkers from xml
 		self.ran_checkers={}
 		self.cmd_prefix = '' # prefix before {lte,nr}-softmodem
+		self.node = ''
+		self.command = ''
 
 
 #-----------------------------------------------------------
@@ -258,6 +260,24 @@ class RANManagement():
 				time.sleep(30)
 		mySSH.close()
 		self.checkBuildeNB(lIpAddr, lUserName, lPassWord, lSourcePath, self.backgroundBuildTestId[int(self.eNB_instance)], HTML)
+
+	def CustomCommand(self, RAN, EPC, HTML ):
+		logging.debug(f"Custom command {self.command} on node {self.node}")
+		lIpAddr = self.eNBIPAddress
+		lUserName = self.eNBUserName
+		lPassWord = self.eNBPassword
+		lSourcePath = self.eNBSourceCodePath
+		mySSH = SSH.SSHConnection()
+		if self.node!='':
+			mySSH.open(lIpAddr, lUserName, lPassWord)
+			cmd = f"ssh {self.node} {self.command}"
+			mySSH.command2(cmd,1)
+			logging.debug(mySSH.cmd2Results)
+			HTML.CreateHtmlTestRow('Command', 'OK', CONST.ALL_PROCESSES_OK)
+			mySSH.close()
+		else:
+			logging.error("Node name not specified")
+			exit()
 
 	def checkBuildeNB(self, lIpAddr, lUserName, lPassWord, lSourcePath, testcaseId, HTML):
 		HTML.testCase_id=testcaseId
