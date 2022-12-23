@@ -1457,18 +1457,6 @@ set(RLC_V2
   ${OPENAIR2_DIR}/LAYER2/rlc_v2/rlc_sdu.c
   )
 
-set(NR_RLC_SRC
-  ${OPENAIR2_DIR}/LAYER2/nr_rlc/asn1_utils.c
-  ${OPENAIR2_DIR}/LAYER2/nr_rlc/nr_rlc_entity.c
-  ${OPENAIR2_DIR}/LAYER2/nr_rlc/nr_rlc_entity_am.c
-  ${OPENAIR2_DIR}/LAYER2/nr_rlc/nr_rlc_entity_tm.c
-  ${OPENAIR2_DIR}/LAYER2/nr_rlc/nr_rlc_entity_um.c
-  ${OPENAIR2_DIR}/LAYER2/nr_rlc/nr_rlc_oai_api.c
-  ${OPENAIR2_DIR}/LAYER2/nr_rlc/nr_rlc_pdu.c
-  ${OPENAIR2_DIR}/LAYER2/nr_rlc/nr_rlc_sdu.c
-  ${OPENAIR2_DIR}/LAYER2/nr_rlc/nr_rlc_ue_manager.c
-  )
-
 set(NR_PDCP_SRC
   ${OPENAIR2_DIR}/LAYER2/nr_pdcp/nr_pdcp_oai_api.c
   ${OPENAIR2_DIR}/LAYER2/nr_pdcp/nr_pdcp_ue_manager.c
@@ -1533,7 +1521,6 @@ set(L2_LTE_SRC
   )
 
 set(L2_NR_SRC
-  ${NR_RLC_SRC}
   ${NR_PDCP_SRC}
   ${NR_SDAP_SRC}
   ${NR_RRC_DIR}/rrc_gNB.c
@@ -1571,7 +1558,6 @@ set(L2_RRC_SRC_UE
   )
 
 set(NR_L2_SRC_UE
-  ${NR_RLC_SRC}
   ${NR_PDCP_SRC}
   ${NR_SDAP_SRC}
   ${NR_UE_RRC_DIR}/L2_interface_ue.c
@@ -1704,7 +1690,7 @@ add_library(L2_NR
   ${GNB_APP_SRC}
   )
 
-target_link_libraries(L2_NR PRIVATE f1ap x2ap s1ap ngap nr_rrc)
+target_link_libraries(L2_NR PRIVATE f1ap x2ap s1ap ngap nr_rrc nr_rlc)
 
 add_library(L2_LTE_NR
   ${L2_RRC_SRC}
@@ -1734,7 +1720,7 @@ endif()
 target_link_libraries(L2_UE PRIVATE lte_rrc)
 
 add_library( NR_L2_UE ${NR_L2_SRC_UE} ${MAC_NR_SRC_UE} )
-target_link_libraries(NR_L2_UE PRIVATE f1ap)
+target_link_libraries(NR_L2_UE PRIVATE f1ap nr_rlc)
 target_link_libraries(NR_L2_UE PRIVATE asn1_nr_rrc asn1_lte_rrc)
 
 add_library(MAC_NR_COMMON
