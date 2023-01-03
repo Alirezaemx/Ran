@@ -43,9 +43,6 @@
 unsigned char Emulation_status;
 unsigned char emu_tx_status;
 unsigned char emu_rx_status;
-// unsigned int Master_list=0;
-// unsigned short Master_id;
-// unsigned int Is_primary_master;
 
 #if !defined(ENABLE_NEW_MULTICAST)
 pthread_mutex_t Tx_mutex;

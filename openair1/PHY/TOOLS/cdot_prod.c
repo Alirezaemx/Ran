@@ -24,7 +24,13 @@
 
 // returns the complex dot product of x and y
 
+#ifdef MAIN
+void print_ints(char *s,__m128i *x);
+void print_shorts(char *s,__m128i *x);
+void print_bytes(char *s,__m128i *x);
+#endif
 /*! \brief Complex number dot_product
+  WARNING: the OAI historical name is dot_product but it is not: it is sum(x*y) not, sum(x*conjugate(y))
  */
 
 c32_t dot_product(const c16_t *x,//! input vector
