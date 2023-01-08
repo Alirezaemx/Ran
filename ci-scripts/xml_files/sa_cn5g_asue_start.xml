@@ -25,8 +25,8 @@
 	<htmlTabName>CN5G-Start</htmlTabName>
 	<htmlTabIcon>log-in</htmlTabIcon>
 	<TestCaseRequestedList>
-000100
 100000
+000100
 	</TestCaseRequestedList>
 	<TestCaseExclusionList>
 	</TestCaseExclusionList>
@@ -38,7 +38,7 @@
 	</testCase>
 	<testCase id = "100000">
 		<class>Custom_Command</class>
-		<desc>Custom command for remote machine</desc>
+		<desc>To reboot USRP</desc>
 		<node>asterix</node>
                 <command>ssh root@172.21.19.14 reboot</command>
 	</testCase>
