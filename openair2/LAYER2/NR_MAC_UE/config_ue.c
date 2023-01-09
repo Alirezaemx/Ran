@@ -602,7 +602,7 @@ int nr_rrc_mac_config_req_ue(
     fapi_nr_config_request_t *cfg = &mac->phy_config.config_req;
 
     if (mac->dl_config_request == NULL) // for SIB1 reception
-      mac->dl_config_request = (fapi_nr_dl_config_request_t *) calloc(20, sizeof(fapi_nr_dl_config_request_t));
+      mac->dl_config_request = calloc(20, sizeof(*mac->dl_config_request));
     //  TODO do something FAPI-like P5 L1/L2 config interface in config_si, config_mib, etc.
 
     if(mibP != NULL){
