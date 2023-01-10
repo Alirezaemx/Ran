@@ -2192,14 +2192,6 @@ set(CMAKE_MODULE_PATH "${OPENAIR_DIR}/cmake_targets/tools/MODULES" "${CMAKE_MODU
 #no matter what
 include_directories("${OPENAIR_DIR}/common/utils/T")
 
-if (${T_TRACER})
-  set(T_SOURCE
-      ${OPENAIR_DIR}/common/utils/T/T_IDs.h
-      ${OPENAIR_DIR}/common/utils/T/T.c
-      ${OPENAIR_DIR}/common/utils/T/local_tracer.c)
-  set(T_LIB "rt")
-endif (${T_TRACER})
-
 #Some files in the T directory are generated.
 #This rule and the following deal with it.
 add_custom_command (
@@ -2215,16 +2207,6 @@ execute_process (
   COMMAND make check_vcd
   WORKING_DIRECTORY ${OPENAIR_DIR}/common/utils/T
 )
-#This rule is specifically needed to generate T files
-#before anything else in a project that uses the T.
-#See below, there are some 'add_dependencies' showing that.
-#Basically we create a custom target and we make other
-#targets depend on it. That forces cmake to generate
-#T files before anything else.
-add_custom_target (
-  generate_T
-  DEPENDS ${OPENAIR_DIR}/common/utils/T/T_IDs.h
-)
 
 # Hack on a test of asn1c version (already dirty)
 add_definitions(-DASN1_MINIMUM_VERSION=924)
@@ -2235,9 +2217,8 @@ add_definitions(-DASN1_MINIMUM_VERSION=924)
 add_library(minimal_lib
   ${OPENAIR_DIR}/common/utils/LOG/log.c
   ${OPENAIR_DIR}/common/utils/minimal_stub.c
-  ${T_SOURCE}
   )
-target_link_libraries(minimal_lib pthread dl ${T_LIB} CONFIG_LIB)
+target_link_libraries(minimal_lib pthread dl ${T_LIB} CONFIG_LIB T)
 
 add_executable(nfapi_test
   ${OPENAIR_DIR}/openair2/NR_PHY_INTERFACE/nfapi_5g_test.c
@@ -2845,6 +2826,7 @@ if(BUILD_WEBSRV)
   include (${OPENAIR_DIR}/common/utils/websrv/websrv_CMakeLists.txt)
 endif()
 
+add_subdirectory(common)
 add_subdirectory(doc)
 add_subdirectory(openair2)
 add_subdirectory(openair3)
