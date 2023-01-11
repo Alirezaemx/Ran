@@ -98,17 +98,6 @@ void reset_opp_meas(void) {
 }
 extern void  phy_free_RU(RU_t *);
 
-void exit_function(const char *file, const char *function, const int line, const char *s) {
-  if (s != NULL) {
-    printf("%s:%d %s() Exiting OAI softmodem: %s\n",file,line, function, s);
-  }
-
-  close_log_mem();
-  oai_exit = 1;
-  sleep(1); //allow lte-softmodem threads to exit first
-  exit(1);
-}
-
 // Fixme: there are many mistakes in the datamodel and in redondant variables
 // TDD is also mode complex
 void setAllfromTS(uint64_t TS, L1_rxtx_proc_t *proc) {
