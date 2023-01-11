@@ -889,7 +889,6 @@ INPUT                  = \
 @CMAKE_CURRENT_SOURCE_DIR@/../common/config/libconfig/config_libconfig_private.h \
 @CMAKE_CURRENT_SOURCE_DIR@/../common/config/config_userapi.c \
 @CMAKE_CURRENT_SOURCE_DIR@/../common/utils/time_meas.h \
-@CMAKE_CURRENT_SOURCE_DIR@/../common/utils/backtrace.c \
 @CMAKE_CURRENT_SOURCE_DIR@/../common/utils/time_stat.h \
 @CMAKE_CURRENT_SOURCE_DIR@/../common/utils/load_module_shlib.h \
 @CMAKE_CURRENT_SOURCE_DIR@/../common/utils/time_meas.c \
