@@ -2827,6 +2827,8 @@ if(BUILD_WEBSRV)
   include (${OPENAIR_DIR}/common/utils/websrv/websrv_CMakeLists.txt)
 endif()
 
+enable_testing()
+
 add_subdirectory(common)
 add_subdirectory(doc)
 add_subdirectory(openair2)
