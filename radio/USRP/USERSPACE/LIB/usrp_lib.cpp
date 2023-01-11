@@ -277,21 +277,8 @@ static int trx_usrp_start(openair0_device *device) {
 #if UHD_VERSION>4000000
   if (device->type == USRP_X400_DEV) {
     // Set every pin on GPIO0 to be controlled by DB0_RF0
-    std::vector<std::string> sxx = {
-				    "DB0_RF0",
-				    "DB0_RF0",
-				    "DB0_RF0",
-				    "DB0_RF0",
-				    "DB0_RF0",
-				    "DB0_RF0",
-				    "DB0_RF0",
-				    "DB0_RF0",
-				    "DB0_RF0",
-				    "DB0_RF0",
-				    "DB0_RF0",
-				    "DB0_RF0",
-    };
-    s->gpio_bank="GPIO0";
+    std::vector<std::string> sxx{12, "DB0_RF0"};
+    s->gpio_bank = "GPIO0";
     s->usrp->set_gpio_src(s->gpio_bank, sxx);
   }
 #endif  
