@@ -617,7 +617,8 @@ int nr_ue_pdsch_procedures(PHY_VARS_NR_UE *ue,
 
     if (ue->chest_time == 1) { // averaging time domain channel estimates
       nr_chest_time_domain_avg(&ue->frame_parms,
-                               (int32_t **) pdsch_dl_ch_estimates,
+                               pdsch_est_size,
+                               pdsch_dl_ch_estimates,
                                dlsch0->dlsch_config.number_symbols,
                                dlsch0->dlsch_config.start_symbol,
                                dlsch0->dlsch_config.dlDmrsSymbPos,
